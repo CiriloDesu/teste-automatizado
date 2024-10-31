@@ -1,3 +1,37 @@
+#name: Continuous Integration
+#
+#on:
+#  pull_request:
+#  push:
+#    branches:
+#      - '*'  # Aciona para qualquer branch
+#
+#jobs:
+#  continuous-integration:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '22'
+#          distribution: 'adopt'
+#
+#
+#      - name: Make mvnw executable
+#        run: chmod +x ./mvnw
+#
+#      - name: Build and test
+#        run: mvn clean package  # Gera o .jar e roda os testes
+#
+#      - name: Upload JAR Artifact
+#        if: success()
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: application-jar
+#          path: target/*.jar  # Diretório onde o Maven salva o .jar após a compilação
 name: Continuous Integration
 
 on:
@@ -19,12 +53,30 @@ jobs:
           java-version: '22'
           distribution: 'adopt'
 
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-      - name: Make mvnw executable
-        run: chmod +x ./mvnw
+      - name: Start API container
+        run: |
+          docker run -d --name my-api-container -p 8080:8080 teste-monitoramento  # Substitua pelo nome da sua imagem
+
+      - name: Wait for API to be ready
+        run: |
+          echo "Aguardando a API iniciar..."
+          for i in {1..10}; do
+            curl --silent --fail http://localhost:8080/alertas/up && break || sleep 5
+          done
 
       - name: Build and test
-        run: mvn clean package  # Gera o .jar e roda os testes
+        run: mvn clean test  # Rodar os testes
+
+      - name: Stop and remove API container
+        run: |
+          docker stop my-api-container
+          docker rm my-api-container
 
       - name: Upload JAR Artifact
         if: success()
