@@ -18,6 +18,8 @@ Este projeto é uma aplicação de testes automatizados desenvolvida em Java, ut
 - [Java JDK 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) ou superior
 - [Maven](https://maven.apache.org/) instalado
 - [Docker](https://www.docker.com/get-started) instalado (se você quiser rodar a aplicação em um contêiner)
+- Imagem API redptionn123/teste-monitoramento:latest
+- [Repositório](https://github.com/CiriloDesu/monitoramento-ambienal-api)
 
 ## Tecnologias Utilizadas
 
