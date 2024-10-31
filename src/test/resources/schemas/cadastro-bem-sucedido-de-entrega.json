@@ -1,0 +1,64 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/object1730347881.json",
+  "title": "Root",
+  "type": "object",
+  "required": [
+    "idAlerta",
+    "numeroAlerta",
+    "localAlerta",
+    "statusAlerta",
+    "dataAlerta"
+  ],
+  "properties": {
+    "idAlerta": {
+      "$id": "#root/idAlerta",
+      "title": "Idalerta",
+      "type": "integer",
+      "examples": [
+        1
+      ],
+      "default": 0
+    },
+    "numeroAlerta": {
+      "$id": "#root/numeroAlerta",
+      "title": "Numeroalerta",
+      "type": "integer",
+      "examples": [
+        2
+      ],
+      "default": 0
+    },
+    "localAlerta": {
+      "$id": "#root/localAlerta",
+      "title": "Localalerta",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "São Paulo"
+      ],
+      "pattern": "^.*$"
+    },
+    "statusAlerta": {
+      "$id": "#root/statusAlerta",
+      "title": "Statusalerta",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "MEDIO_RISCO"
+      ],
+      "pattern": "^.*$"
+    },
+    "dataAlerta": {
+      "$id": "#root/dataAlerta",
+      "title": "Dataalerta",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "2024-10-31"
+      ],
+      "pattern": "^.*$"
+    }
+  }
+}
