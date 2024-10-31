@@ -62,7 +62,7 @@ jobs:
 
       - name: Start API container
         run: |
-          docker run -d --name my-api-container -p 8080:8080 teste-monitoramento  # Substitua pelo nome da sua imagem
+          docker run -d --name my-api-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/teste-monitoramento  # Substitua pelo nome da sua imagem
 
       - name: Wait for API to be ready
         run: |
