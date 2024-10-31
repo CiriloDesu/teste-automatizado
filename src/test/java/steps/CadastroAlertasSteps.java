@@ -5,10 +5,10 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
-import model.ErrorMessageModel;
 import org.junit.Assert;
 import services.CadastroAlertasService;
 
+import model.ErrorMessageModel;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +40,7 @@ public class CadastroAlertasSteps {
         ErrorMessageModel errorMessageModel = cadastroAlertasService.gson.fromJson(
                 cadastroAlertasService.response.jsonPath().prettify(), ErrorMessageModel.class);
         Assert.assertEquals(message, errorMessageModel.getMessage());
+        System.out.println(errorMessageModel.getMessage());
     }
 
     @Dado("que eu recupere o ID do alerta criado no contexto")

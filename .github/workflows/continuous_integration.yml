@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '*'  # Aciona para qualquer branch
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '22'
+          distribution: 'adopt'
+
+      - name: Build and test
+        run: mvn clean package  # Gera o .jar e roda os testes
+
+      - name: Upload JAR Artifact
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-jar
+          path: target/*.jar  # Diretório onde o Maven salva o .jar após a compilação

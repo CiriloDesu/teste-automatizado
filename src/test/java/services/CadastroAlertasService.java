@@ -14,6 +14,7 @@ import model.AlertaModel;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import model.ErrorMessageModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -89,11 +90,19 @@ public class CadastroAlertasService {
 
     public Set<ValidationMessage> validateResponseAgainstSchema() throws IOException
     {
+        // Obter o corpo da resposta como String e converter para JSONObject
         JSONObject jsonResponse = new JSONObject(response.getBody().asString());
+
+        // Configurar o JsonSchemaFactory e criar o JsonSchema
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
         JsonSchema schema = schemaFactory.getSchema(jsonSchema.toString());
+
+        // Converter o JSON de resposta para JsonNode
         JsonNode jsonResponseNode = mapper.readTree(jsonResponse.toString());
+
+        // Validar o JSON de resposta contra o esquema
         Set<ValidationMessage> schemaValidationErrors = schema.validate(jsonResponseNode);
+
         return schemaValidationErrors;
     }
 
