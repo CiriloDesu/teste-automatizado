@@ -33,7 +33,7 @@ public class CadastroAlertasService {
             .excludeFieldsWithoutExposeAnnotation()
             .create();
     public Response response;
-    String baseUrl = "testeauto-g0f6hcc9haepatg6.brazilsouth-01.azurewebsites.net";
+    String baseUrl = "http://testeauto-g0f6hcc9haepatg6.brazilsouth-01.azurewebsites.net";
 
     public void setFieldsAlerta(String field, String value) {
         switch (field) {
