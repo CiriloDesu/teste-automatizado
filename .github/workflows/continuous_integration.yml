@@ -1,37 +1,3 @@
-#name: Continuous Integration
-#
-#on:
-#  pull_request:
-#  push:
-#    branches:
-#      - '*'  # Aciona para qualquer branch
-#
-#jobs:
-#  continuous-integration:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      - name: Set up JDK
-#        uses: actions/setup-java@v2
-#        with:
-#          java-version: '22'
-#          distribution: 'adopt'
-#
-#
-#      - name: Make mvnw executable
-#        run: chmod +x ./mvnw
-#
-#      - name: Build and test
-#        run: mvn clean package  # Gera o .jar e roda os testes
-#
-#      - name: Upload JAR Artifact
-#        if: success()
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: application-jar
-#          path: target/*.jar  # Diretório onde o Maven salva o .jar após a compilação
 name: Continuous Integration
 
 on:
@@ -53,6 +19,9 @@ jobs:
           java-version: '22'
           distribution: 'adopt'
 
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -62,7 +31,7 @@ jobs:
 
       - name: Start API container
         run: |
-          docker run -d --name my-api-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/teste-monitoramento  # Substitua pelo nome da sua imagem
+          docker run -d --name my-api-container -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/teste-monitoramento
 
       - name: Wait for API to be ready
         run: |
@@ -72,7 +41,7 @@ jobs:
           done
 
       - name: Build and test
-        run: mvn clean test  # Rodar os testes
+        run: ./mvnw clean test  # Agora usando o mvnw
 
       - name: Stop and remove API container
         run: |
@@ -84,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: application-jar
-          path: target/*.jar  # Diretório onde o Maven salva o .jar após a compilação
+          path: target/*.jar
