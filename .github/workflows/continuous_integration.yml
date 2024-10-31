@@ -19,6 +19,10 @@ jobs:
           java-version: '22'
           distribution: 'adopt'
 
+
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
+
       - name: Build and test
         run: mvn clean package  # Gera o .jar e roda os testes
 
